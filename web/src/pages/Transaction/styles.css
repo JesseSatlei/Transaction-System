@@ -1,0 +1,15 @@
+#transaction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  background-color: var(--color-background-secondary);
+  text-align: center;
+}
+
+.transaction-title {
+  font-size: 3rem;
+  color: var(--color-title-in-primary);
+}

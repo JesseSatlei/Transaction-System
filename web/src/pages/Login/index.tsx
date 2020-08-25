@@ -13,14 +13,16 @@ function Login() {
             Inscreva-se
           </Link>
         </div>
-        <form method="POST" action="">
+        <form action="">
         <div className="">
           <input id="email" type="email" className="form-control" placeholder="E-mail..." name="email" required />
           <input id="password" type="password" className="form-control" placeholder="Senha..." name="password" required />
         </div>
         <div className="">
           <button type="submit" className="">
-            Login
+            <Link to="/transaction">
+              Login
+            </Link>
           </button>
           {/* <a className="" href="{{ route('password.request') }}">
             Esqueceu sua Senha?

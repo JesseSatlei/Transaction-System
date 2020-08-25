@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Transaction from './pages/Transaction';
 
 function Routes() {
   return (
@@ -10,6 +11,7 @@ function Routes() {
       <Route path="/" exact component={Login} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/transaction" component={Transaction} />
     </BrowserRouter>
   );
 }
