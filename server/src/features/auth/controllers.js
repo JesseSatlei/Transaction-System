@@ -1,14 +1,36 @@
-const services = require('./services');
 const Boom = require('boom');
+const Validator = require('fastest-validator');
+const jwt = require('jsonwebtoken')
+
+const services = require('./services');
+
+const v = new Validator();
 
 module.exports = {
   auth: async ctx => {
-    const { request, response } = ctx;
-    const user = await services.auth(request.body);
+    const { request: { body }, response } = ctx;
+
+    const schema = {
+      email: { max: 255, min: 5, type: 'string' },
+      password: { max: 16, min: 8, type: 'string' }
+    }
+
+    const errors = v.validate(body, schema);
+
+    if (Array.isArray(errors) && errors.length ) {
+      response.status = 400;
+      return response.body = Boom.badRequest(null, errors);
+    }
+
+    const user = await services.auth(body)
+
     if (user) {
-      response.body = user;
+      response.body = {
+        result: jwt.sign({ email: user.email }, 'Meu Segredo')
+      };
     } else {
-      response.body = { result: Boom.badRequest() }
+      response.status = 401;
+      response.body = { result: Boom.unauthorized() }
     }
   }
 }
