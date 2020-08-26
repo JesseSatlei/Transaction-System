@@ -4,6 +4,7 @@ import './styles.css';
 
 import Input from '../../components/Input';
 import Select from '../../components/Select';
+import { Link } from 'react-router-dom';
 
 function Transaction() {
   const [ operation, setOperation ] = useState('');
@@ -12,6 +13,7 @@ function Transaction() {
 
   function handleCreateTransaction(e: FormEvent) {
     e.preventDefault();
+    console.log('entruo');
   }
 
   return (
@@ -46,11 +48,13 @@ function Transaction() {
           }}
           options={[
             {value: '0', label: 'Receita'},
-            {value: '1', label: 'Resultado'}
+            {value: '1', label: 'Resultado'},
           ]}
         />
         <button type="submit">
-          Salvar
+          <Link to="/list-transaction">
+            Salvar
+          </Link>
         </button>
       </form>
     </main>

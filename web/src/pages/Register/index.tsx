@@ -1,15 +1,88 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
+import { ErrorMessage, Formik, Form, Field } from 'formik';
+import { Link } from 'react-router-dom';
+import * as yup from 'yup'
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import './styles.css';
-import { Link } from 'react-router-dom';
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  email: string,
+  password: string,
+}
 
 function Register() {
+  const history = useHistory();
+
+  function handleSubmit(values: InputProps) {
+    axios.post('http://localhost:8080/v1/api/user', values)
+      .then(resp => {
+        const { data } = resp
+        if (data) {
+          localStorage.setItem('app-token', data)
+          history.push('/login')
+        }
+      })
+  }
+
+  const validations = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(8).required()
+  });
+
   return (
     <main className="register">
       <div className="register-title">
         <h2>Cadastro</h2>
       </div>
-      <form >
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={handleSubmit}
+        validationSchema={validations}
+        >
+        <Form>
+          <div>
+            <div>
+              <Field
+                name="fullName"
+                className=""
+              />
+              <ErrorMessage
+                component="span"
+                name="fullName"
+              />
+            </div>
+            <div>
+              <Field
+                name="email"
+                className=""
+              />
+              <ErrorMessage
+                component="span"
+                name="email"
+              />
+            </div>
+            <div>
+              <Field
+                name="password"
+                className=""
+              />
+              <ErrorMessage
+                component="span"
+                name="password"
+              />
+            </div>
+          </div>
+          <button type="submit">
+            Login
+          </button>
+        </Form>
+      </Formik>
+      <Link to="/">
+          Voltar
+        </Link>
+      {/* <form >
         <div>
           <label htmlFor="name">Nome Completo: </label>
           <input id="name" type="text" name="name" placeholder="Digite o seu nome" required />
@@ -29,10 +102,8 @@ function Register() {
         <button type="submit" className="btn">
           Register
         </button>
-        <Link to="/">
-          Voltar
-        </Link>
-      </form>
+
+      </form> */}
     </main>
   );
 }
