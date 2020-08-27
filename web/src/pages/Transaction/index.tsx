@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { ErrorMessage, Formik, Form, Field } from 'formik';
-// import { Link } from 'react-router-dom';
+import React from 'react';
+import { Formik, Form, Field } from 'formik';
+import { Link, useHistory } from 'react-router-dom';
 // import axios from 'axios';
 
+import api from '../../services/api';
+
 import './styles.css';
-import { FormatNumber } from '../../utils/FormatNumber';
 
 interface TransactionProps {
   price: string,
@@ -13,11 +14,32 @@ interface TransactionProps {
 }
 
 function Transaction() {
-  // const [ operation, setOperation ] = useState('');
-  // const [ price, setPrice ] = useState('');
-  // const [ name, setName ] = useState('');
+  const history = useHistory();
 
-  function handleCreateTransaction(e: TransactionProps) {
+  function handleCreateTransaction(values: TransactionProps) {
+    const informations = {
+      name: values['name'],
+      balance: Number(values['price']),
+      transaction: Number(values['transaction'])
+    }
+
+    api.post('transaction', informations)
+      .then(resp => {
+        const { data } = resp;
+        if (data) {
+          history.push('/list-transaction');
+        }
+      })
+      .catch(() => {[
+        alert('Ocorreu erro na transação.')
+      ]});
+    // axios.post('http://localhost:8080/v1/api/transaction', informations)
+    //   .then(resp => {
+    //     const { data } = resp;
+    //     if (data) {
+    //       history.push('/list-transaction');
+    //     }
+    //   })
   }
 
   return (
@@ -26,7 +48,7 @@ function Transaction() {
         <h2 className="transaction-title">Cadastrar Transação</h2>
       </div>
       <Formik
-        initialValues={{ price: '', name: '', transaction: '' }}
+        initialValues={{ price: '0', name: '', transaction: '' }}
         onSubmit={handleCreateTransaction}
       >
         <Form>
@@ -54,9 +76,9 @@ function Transaction() {
           </button>
         </Form>
       </Formik>
-      <button>
+      <Link to="list-transaction">
         Saldo
-      </button>
+      </Link>
     </main>
   );
 }

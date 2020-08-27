@@ -2,11 +2,12 @@ import React, { InputHTMLAttributes } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup'
-import axios from 'axios';
+// import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 
 import './styles.css';
+import api from '../../services/api';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   email: string,
@@ -18,7 +19,7 @@ function Login() {
   // const handleSubmit = values => console.log(values);
 
   function handleSubmit(values: InputProps) {
-    axios.post('http://localhost:8080/v1/api/auth', values)
+    api.post('/auth', values)
       .then(resp => {
         const { data } = resp
         if (data) {
@@ -26,6 +27,18 @@ function Login() {
           history.push('/transaction')
         }
       })
+      .catch(() => {
+        alert('Erro no login');
+      });
+
+    // axios.post('http://localhost:8080/v1/api/auth', values)
+    //   .then(resp => {
+    //     const { data } = resp
+    //     if (data) {
+    //       localStorage.setItem('app-token', data)
+    //       history.push('/transaction')
+    //     }
+    //   })
   }
 
   const validations = yup.object().shape({
@@ -60,6 +73,7 @@ function Login() {
               />
               <Field
                 name="password"
+                type="password"
                 className=""
                 placeholder="Senha"
               />

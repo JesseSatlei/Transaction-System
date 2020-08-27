@@ -2,10 +2,11 @@ import React, { InputHTMLAttributes } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup'
-import axios from 'axios';
+// import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './styles.css';
+import api from '../../services/api';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   email: string,
@@ -16,13 +17,25 @@ function Register() {
   const history = useHistory();
 
   function handleSubmit(values: InputProps) {
-    axios.post('http://localhost:8080/v1/api/user', values)
+
+    api.post('user', values)
       .then(resp => {
-        const { data } = resp
+        const { data } = resp;
         if (data) {
           history.push('/login')
         }
       })
+      .catch(() => {
+        alert('Erro no cadastro do cliente');
+      });
+
+    // axios.post('http://localhost:8080/v1/api/user', values)
+    //   .then(resp => {
+    //     const { data } = resp
+    //     if (data) {
+    //       history.push('/login')
+    //     }
+    //   })
   }
 
   const validations = yup.object().shape({
@@ -66,6 +79,7 @@ function Register() {
 
               <Field
                 name="password"
+                type="password"
                 className=""
                 placeholder="Senha"
               />
