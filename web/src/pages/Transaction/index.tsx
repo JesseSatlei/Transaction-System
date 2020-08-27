@@ -1,19 +1,23 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
+import { ErrorMessage, Formik, Form, Field } from 'formik';
+// import { Link } from 'react-router-dom';
+// import axios from 'axios';
 
 import './styles.css';
+import { FormatNumber } from '../../utils/FormatNumber';
 
-import Input from '../../components/Input';
-import Select from '../../components/Select';
-import { Link } from 'react-router-dom';
+interface TransactionProps {
+  price: string,
+  name: string,
+  transaction: string
+}
 
 function Transaction() {
-  const [ operation, setOperation ] = useState('');
-  const [ price, setPrice ] = useState('');
-  const [ name, setName ] = useState('');
+  // const [ operation, setOperation ] = useState('');
+  // const [ price, setPrice ] = useState('');
+  // const [ name, setName ] = useState('');
 
-  function handleCreateTransaction(e: FormEvent) {
-    e.preventDefault();
-    console.log('entruo');
+  function handleCreateTransaction(e: TransactionProps) {
   }
 
   return (
@@ -21,42 +25,38 @@ function Transaction() {
       <div>
         <h2 className="transaction-title">Cadastrar Transação</h2>
       </div>
-      <form onSubmit={handleCreateTransaction}>
-        <Input
-          name="price"
-          value={price}
-          label="Valor:"
-          onChange={(e) => {
-            setPrice(e.target.value);
-          }}
-        />
-        <Input
-          name="price"
-          value={name}
-          label="Nome da transação:"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
+      <Formik
+        initialValues={{ price: '', name: '', transaction: '' }}
+        onSubmit={handleCreateTransaction}
+      >
+        <Form>
+          <div className="input-block">
 
-        <Select
-          name="transaction"
-          label="Tipo de Transação"
-          value={operation}
-          onChange={(e) => {
-            setOperation(e.target.value);
-          }}
-          options={[
-            {value: '0', label: 'Receita'},
-            {value: '1', label: 'Resultado'},
-          ]}
-        />
-        <button type="submit">
-          <Link to="/list-transaction">
-            Salvar
-          </Link>
-        </button>
-      </form>
+            <Field
+              name="price"
+              className=""
+              placeholder="Valor"
+            />
+            <Field
+              name="name"
+              className=""
+              placeholder="Nome"
+            />
+          </div>
+          <div className="select-block">
+            <Field name="transaction" as="select" placeholder="Tipo de Transação" >
+              <option value="0">Receita</option>
+              <option value="1">Resultado</option>
+            </Field>
+          </div>
+          <button type="submit">
+            Cadastrar
+          </button>
+        </Form>
+      </Formik>
+      <button>
+        Saldo
+      </button>
     </main>
   );
 }

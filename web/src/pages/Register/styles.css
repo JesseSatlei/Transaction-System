@@ -46,6 +46,10 @@
   margin-top: 3px;
 }
 
+.register input + input {
+  margin-top: 10px;
+}
+
 .register button {
   margin: 1rem 0 1rem 0;
   background: linear-gradient(135deg, #6e8efb, #a777e3);

@@ -29,8 +29,8 @@ function Login() {
   }
 
   const validations = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().min(8).required()
+    email: yup.string().email('Esse e-mail é inválido').required('E-mail obrigatório'),
+    password: yup.string().min(8).required('A senha é obrigatória')
   });
 
   return (
@@ -52,6 +52,7 @@ function Login() {
               <Field
                 name="email"
                 className=""
+                placeholder="E-mail"
               />
               <ErrorMessage
                 component="span"
@@ -60,6 +61,7 @@ function Login() {
               <Field
                 name="password"
                 className=""
+                placeholder="Senha"
               />
               <ErrorMessage
                 component="span"
