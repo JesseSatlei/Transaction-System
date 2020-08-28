@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+// Importa biblioteca para criação das tabelas
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,7 +10,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-// import ccyFormat from '../../utils/common';
 
 import './styles.css';
 import api from '../../services/api';
@@ -23,72 +23,40 @@ interface Row {
   updatedAt?: string;
 }
 
-function ccyFormat (num: number) {
-  return `${num.toFixed(2)}`;
-}
-
 function ListTransaction() {
   const [ informations, setInformations ] = useState();
-
+  // Trás todas as informações referente a transações
   useEffect(() => {
     api.get('transaction').then((resp) => {
       setInformations(resp.data)
     })
   }, []);
 
-  function createRow(name: string, transaction: number, balance: number) {
-    return { name, balance, transaction };
-  }
-
-  // useEffect(() => {
-  //   api.get('transaction').then((resp) => {
-  //     var info = [];
-  //     for (let index = 0; index < resp.data.length; index++) {
-  //       info.push(Object.values(resp.data[index]))
-  //     }
-
-  //     setInformations(info);
-  //   })
-  // }, []);
-
   const useStyles = makeStyles({
     table: {
       minWidth: 700,
     },
   });
-
-  // function subtotal(items: Row[]) {
-  //   return items.map(({ balance }) => balance).reduce((sum, i) => sum + i, 0);
-  // }
-
-  // const rows = [
-  //   createRow('Paperclips (Box)', 100, 1),
-  // ];
-
-
-
+  // Seta um valor inicial, caso não exista transações no banco;
   const rows = informations ? informations : [{
     name: "Fulano",
     transaction: 0,
     balance: 0
   }];
-  // const total = subtotal(rows);
-  // Verificação criada devido ao erro do Sequelize envolvendo Decimal
-  function balanceTotal(items: Row[]) {
+
+  // Verificação criada devido ao erro do Sequelize envolvendo trazer um Decimal como String
+  function transformedInNumber(items: Row[]) {
     return items.map(({ balance, transaction }) => transaction ? balance : balance * -1);
   }
-  const total = balanceTotal(rows);
-  const teste = total.map((balance: number) => {
+  const totalTransaformed = transformedInNumber(rows);
+  const totalTransformedInNumber = totalTransaformed.map((balance: number) => {
     return Number(balance);
   });
 
-  var teste2 = 0;
-  for (let index = 0; index < teste.length; index++) {
-    teste2 += teste[index];
+  var total = 0;
+  for (let index = 0; index < totalTransformedInNumber.length; index++) {
+    total += totalTransformedInNumber[index];
   }
-
-  console.log(teste2);
-// Verificação criada devido ao erro do Sequelize envolvendo Decimal
 
   const classes = useStyles();
 
@@ -123,7 +91,7 @@ function ListTransaction() {
             <TableRow>
               <TableCell rowSpan={3} />
               <TableCell colSpan={1}>Total: </TableCell>
-              <TableCell align="right">{teste2}</TableCell>
+              <TableCell align="right">{total}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

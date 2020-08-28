@@ -2,7 +2,6 @@ import React, { InputHTMLAttributes } from 'react';
 import { ErrorMessage, Formik, Form, Field } from 'formik';
 import { Link } from 'react-router-dom';
 import * as yup from 'yup'
-// import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 import './styles.css';
@@ -15,7 +14,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 function Register() {
   const history = useHistory();
-
+  // Cria um novo cadastro
   function handleSubmit(values: InputProps) {
 
     api.post('user', values)
@@ -29,15 +28,8 @@ function Register() {
         alert('Erro no cadastro do cliente');
       });
 
-    // axios.post('http://localhost:8080/v1/api/user', values)
-    //   .then(resp => {
-    //     const { data } = resp
-    //     if (data) {
-    //       history.push('/login')
-    //     }
-    //   })
   }
-
+  // Adiciona validações nos campos
   const validations = yup.object().shape({
     fullName: yup.string().min(1).required('O nome é obrigatório'),
     email: yup.string().email('Esse e-mail é inválido').required('E-mail obrigatório'),

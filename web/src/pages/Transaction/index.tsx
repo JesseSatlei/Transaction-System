@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Link, useHistory } from 'react-router-dom';
-// import axios from 'axios';
 
 import api from '../../services/api';
 
@@ -23,6 +22,7 @@ function Transaction() {
       transaction: Number(values['transaction'])
     }
 
+    //Cria uma nova transação
     api.post('transaction', informations)
       .then(resp => {
         const { data } = resp;
@@ -31,13 +31,6 @@ function Transaction() {
         }
       })
 
-    // axios.post('http://localhost:8080/v1/api/transaction', informations)
-    //   .then(resp => {
-    //     const { data } = resp;
-    //     if (data) {
-    //       history.push('/list-transaction');
-    //     }
-    //   })
   }
 
   return (

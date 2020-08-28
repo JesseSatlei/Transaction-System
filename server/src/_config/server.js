@@ -8,7 +8,7 @@ const app = new Koa();
 const router = new Router();
 
 module.exports = () => {
-
+  // configura aplicação
   applyRoutes(router);
   app.use(cors()).use(bodyParser()).use(router.routes()).use(router.allowedMethods());
 
