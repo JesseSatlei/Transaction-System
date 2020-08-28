@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/v1/api'
+  baseURL: 'https://incca-back.herokuapp.com/v1/api'
 });
 
 export default api;

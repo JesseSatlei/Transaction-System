@@ -30,9 +30,7 @@ function Transaction() {
           history.push('/list-transaction');
         }
       })
-      .catch(() => {[
-        alert('Ocorreu erro na transação.')
-      ]});
+
     // axios.post('http://localhost:8080/v1/api/transaction', informations)
     //   .then(resp => {
     //     const { data } = resp;

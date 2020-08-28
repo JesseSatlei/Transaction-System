@@ -12,5 +12,6 @@ module.exports = () => {
   applyRoutes(router);
   app.use(cors()).use(bodyParser()).use(router.routes()).use(router.allowedMethods());
 
-  app.listen(8080)
+  var PORT = process.env.PORT || 8080;
+  app.listen(PORT)
 }

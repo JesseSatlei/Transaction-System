@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import './styles.css';
 
 const TAX_RATE = 0.07;
 
@@ -56,43 +57,42 @@ function ListTransaction() {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper} className="container">
-      <Table className={classes.table} aria-label="spanning table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center" colSpan={3}>
-              Detalhes
-            </TableCell>
-            <TableCell align="right">Balanço</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Nome: </TableCell>
-            <TableCell align="right">Tipo de Transação</TableCell>
-            <TableCell align="right">Unit</TableCell>
-            <TableCell align="right">Sum</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.desc}>
-              <TableCell>{row.desc}</TableCell>
-              <TableCell align="right">{row.qty}</TableCell>
-              <TableCell align="right">{row.unit}</TableCell>
-              <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+    <main className="container" id="list-transaction">
+      <div>
+        <h2 className="transaction-title">Relatório de Transações</h2>
+      </div>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="spanning table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center" colSpan={2}>
+                Detalhes
+              </TableCell>
+              <TableCell align="right">Balanço</TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell rowSpan={3} />
-            <TableCell colSpan={2}>Subtotal</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={2}>Total</TableCell>
-            <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+            <TableRow>
+              <TableCell>Nome: </TableCell>
+              <TableCell align="right">Tipo de Transação</TableCell>
+              <TableCell align="right">Preço</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.desc}>
+                <TableCell>{row.desc}</TableCell>
+                <TableCell align="right">{row.unit}</TableCell>
+                <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell rowSpan={3} />
+              <TableCell colSpan={1}>Total: </TableCell>
+              <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </main>
   );
 }
 

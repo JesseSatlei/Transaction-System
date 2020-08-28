@@ -8,7 +8,7 @@
     "storage": "./database.sqlite3"
   },
   "production": {
-    "dialect": "sqlite",
-    "storage": "./database.sqlite3"
+    "use_env_variable": "JAWSDB_URL",
+    "dialect": "mysql"
   }
 }
