@@ -21,7 +21,7 @@
 .select-block select {
   width: 100%;
   height: 3rem;
-  margin-top: 0.4rem;
+  margin-top: 1rem;
   margin-bottom: 0.4rem;
   border-radius: 3rem;
   background: var(--color-input-background);
@@ -51,9 +51,43 @@
 }
 
 .input-block label + input {
-  margin-top: 3px;
+  margin-top: 1rem;
+}
+
+.input-block input + input {
+  margin-top: 1rem;
 }
 
 .input-block input:hover {
   border: 1px solid #6e8efb;
+}
+
+#transaction a {
+  text-decoration: none;
+  color: var(--color-text-complement);
+}
+
+#transaction a:hover {
+  color: var(--color-text-base);
+  transform: scale(1.1);
+  transition: 0.2s;
+}
+
+#transaction button {
+  margin: 1rem 0 1rem 0;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: #fff;
+  width: 100%;
+  height: 3rem;
+  display: block;
+  border: none;
+  border-radius: 30px;
+}
+
+#transaction button:hover {
+  color: #fff;
+  border: none;
+  transform: scale(1.05);
+  transition: 0.2s;
+  font-size: 16px;
 }
